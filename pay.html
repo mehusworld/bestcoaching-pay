@@ -1,47 +1,60 @@
-<!DOCTYPE html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!DOCTYPE html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>বেস্ট কোচিং, বেতন দিন</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-<style>:root{--pr:#0f766e;--prd:#0b5a54;--prl:#e6f4f2;--tx:#102a2d;--mu:#5f7478;--bd:#dfe7e8;--bg:#f2f6f6;--er:#dc2626}
-*{box-sizing:border-box}body{margin:0;font-family:"Hind Siliguri",system-ui,sans-serif;color:var(--tx);background:var(--bg);padding:calc(14px + env(safe-area-inset-top)) 14px 30px}
-.c{max-width:460px;margin:0 auto;background:#fff;border:1px solid var(--bd);border-radius:16px;padding:22px}
-h2{margin:0 0 4px;color:var(--prd)}p{margin:0 0 14px;color:var(--mu)}
-input[type=text],input[type=tel]{width:100%;padding:11px 12px;border:1px solid var(--bd);border-radius:10px;font:inherit;font-size:16px;margin:4px 0 12px}
-.b{background:var(--pr);color:#fff;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;width:100%;cursor:pointer;font-size:16px}
-.b:disabled{opacity:.6}.b.s{background:#fff;color:var(--pr);border:1px solid var(--bd)}
-.bk{display:inline-block;color:var(--pr);font-weight:600;margin-bottom:12px;cursor:pointer}
-label.i{display:flex;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid #edf2f2}
-label.i input{width:20px;height:20px}.n{background:var(--prl);border-radius:10px;padding:12px;font-size:14.5px;margin:0 0 14px}
-.er{color:var(--er);min-height:20px;margin:0 0 8px}</style></head><body>
-<div class="c"><span class="bk" onclick="back()">← ফিরে যান</span><div id="app"></div></div>
+<style>
+:root{--pr:#0f766e;--prd:#0b5a54;--prl:#e6f4f2;--tx:#102a2d;--mu:#5f7478;--bd:#dfe7e8;--bg:#f2f6f6}
+*{box-sizing:border-box}
+body{font-family:"Hind Siliguri","Noto Sans Bengali",sans-serif;background:var(--bg);margin:0;color:var(--tx)}
+.top{background:linear-gradient(135deg,#083f3b,var(--pr));color:#fff;padding:22px 18px 70px}
+.top .in{max-width:460px;margin:0 auto}
+.top a{color:#fff;text-decoration:none;font-size:14px;opacity:.9}
+.top h1{margin:10px 0 2px;font-size:26px}.top p{margin:0;opacity:.88;font-size:14px}
+.c{max-width:460px;margin:-48px auto 30px;background:#fff;border:1px solid var(--bd);border-radius:18px;padding:22px;box-shadow:0 12px 30px rgba(11,90,84,.12)}
+input[type=text]{width:100%;padding:12px 14px;border:1px solid var(--bd);border-radius:10px;font:inherit;font-size:17px;margin:4px 0 14px}
+input[type=text]:focus{outline:0;border-color:var(--pr);box-shadow:0 0 0 3px #ccebe7}
+button{background:var(--pr);color:#fff;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;width:100%;cursor:pointer}
+button:hover{background:var(--prd)}button:disabled{opacity:.6;cursor:wait}
+button.sec{background:#fff;color:var(--pr);border:1px solid var(--bd);margin-top:10px}
+label.i{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #edf2f2;cursor:pointer}
+label.i input{width:20px;height:20px;accent-color:var(--pr)}
+.er{color:#dc2626;min-height:22px;font-size:14px}
+.nm{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.did{background:#fef3c7;color:#92400e;border-radius:6px;padding:2px 10px;font-weight:700;font-size:14px}
+.tt{display:flex;justify-content:space-between;background:var(--prl);border-radius:10px;padding:12px 14px;margin:14px 0;font-size:18px}
+</style></head><body>
+<div class="top"><div class="in"><a href="home.html">← হোমে ফিরুন</a><h1>মাসিক বেতন পরিশোধ</h1><p>শুধু আইডি নম্বর দিয়েই বেতন দিন</p></div></div>
+<div class="c" id="app"></div>
 <script>
 const SB=supabase.createClient("https://rfopkndpxafctfkqvmqj.supabase.co","sb_publishable_EH_BnOXjZ3EtUJ3wl9-8CA_2_Glbkyi");
 const $=id=>document.getElementById(id),BN="০১২৩৪৫৬৭৮৯",bn=x=>String(x).replace(/\d/g,d=>BN[d]);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const MN=["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"];
-const fixPh=v=>v.replace(/[০-৯]/g,d=>BN.indexOf(d)).replace(/\D/g,"").slice(0,11);
-function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
-function back(){if(history.length>1)history.back();else location.href="landing.html"} // ← landing ফাইলের নাম আলাদা হলে এখানে বদলান
-let D=null,U="",P="";
-function home(m){const pend=ls("bc_order");
-$("app").innerHTML=`<h2>মাসিক বেতন দিন</h2><p>শিক্ষার্থীর আইডি ও মোবাইল (বা অভিভাবকের মোবাইল) দিন</p>
-${pend?`<div class="n">আগের একটি পেমেন্ট যাচাই বাকি আছে।<br><button class="b s" style="margin-top:8px" onclick="chk()">পেমেন্ট হয়েছে কিনা দেখুন</button></div>`:""}
-<p class="er">${m||""}</p><input id="u" type="text" placeholder="আইডি, যেমন best_phy01" autocapitalize="none">
-<input id="p" type="tel" inputmode="numeric" maxlength="11" placeholder="মোবাইল নম্বর" oninput="this.value=fixPh(this.value)"><button class="b" onclick="look()">বকেয়া দেখুন</button>`}
-async function chk(){const id=ls("bc_order");$("app").innerHTML="<p>যাচাই হচ্ছে...</p>";
-const r=await SB.functions.invoke("up-pay",{body:{action:"status",order_id:id}}),s=r.data&&r.data.status;
-if(s=="paid"){ls("bc_order",null);$("app").innerHTML=`<h2>✅ পেমেন্ট নিশ্চিত হয়েছে</h2><p>আপনার বেতন পরিশোধিত হয়েছে। ধন্যবাদ।</p><button class="b" onclick="home()">আবার বেতন দিন</button>`}
-else $("app").innerHTML=`<h2>⏳ যাচাই চলছে</h2><p>টাকা এখনো নিশ্চিত হয়নি। এক-দুই মিনিট পর আবার দেখুন। টাকা কেটে গিয়ে থাকলে কোচিংয়ে জানান।</p><button class="b" onclick="chk()">আবার দেখুন</button> <button class="b s" style="margin-top:8px" onclick="home()">নতুন পেমেন্ট</button>`}
-async function look(){U=$("u").value.trim();P=$("p").value.trim();if(!U||P.length!=11){home("আইডি ও ১১ সংখ্যার মোবাইল দিন");return}
-const r=await SB.rpc("pay_due",{p_uid:U,p_phone:P});if(r.error||!r.data){home("আইডি বা মোবাইল মেলেনি");return}D=r.data;list()}
-function list(){const it=D.items;$("app").innerHTML=`<h2>${D.name}</h2><p>যে মাসের বেতন দেবেন সেটা বাছুন</p>`+(it.length?
-it.map((x,i)=>`<label class="i"><input type="checkbox" value="${i}" onchange="tot()"><span style="flex:1">${MN[+x.m.slice(5)-1]}, ${x.name}</span><b>${bn(x.amt)}৳</b></label>`).join("")+
-`<p style="margin:14px 0"><b>মোট: <span id="t">০৳</span></b></p><div class="n">পরের পেজে bKash, Nagad বা Rocket বেছে টাকা দিন। টাকা দেওয়া হলে নিজে থেকেই পরিশোধিত হয়ে যাবে।</div><button class="b" id="b" onclick="go()">পেমেন্ট করুন</button>`
-:`<p>কোনো বকেয়া নেই 🎉</p><button class="b s" onclick="home()">ফিরে যান</button>`)}
+let D=null,U="";
+function home(m){$("app").innerHTML=`<p style="margin:0 0 10px;color:var(--mu)">ভর্তি কার্ডে লেখা আইডি নম্বরটি দিন</p>
+<label for="u" style="font-size:14px;color:var(--mu)">শিক্ষার্থীর আইডি</label>
+<input type="text" id="u" placeholder="যেমন: BC260001" autocomplete="off" autocapitalize="characters" spellcheck="false" onkeydown="if(event.key=='Enter')look()">
+<div class="er" id="er">${esc(m||"")}</div><button id="lb" onclick="look()">বকেয়া দেখুন</button>`}
+async function look(){U=$("u").value.trim().toUpperCase();if(!U){$("er").textContent="আইডি নম্বর লিখুন";return}
+ $("lb").disabled=true;$("lb").textContent="খোঁজা হচ্ছে...";
+ const r=await SB.rpc("pay_due",{p_uid:U,p_phone:""});
+ if(r.error||!r.data){home("এই আইডি পাওয়া যায়নি। আইডি ঠিক আছে কিনা দেখুন।");return}D=r.data;list()}
+function list(){const it=D.items||[];$("app").innerHTML=`<div class="nm"><h3 style="margin:0">${esc(D.name)}</h3><span class="did">${esc(U)}</span></div>`+(it.length?
+ `<p style="margin:0 0 6px;color:var(--mu);font-size:14px">যে মাসের বেতন দেবেন সেগুলো বেছে নিন</p>`+
+ it.map((x,i)=>`<label class="i"><input type="checkbox" value="${i}" onchange="tot()"><span style="flex:1">${MN[+x.m.slice(5)-1]}, ${esc(x.name)}</span><b>${bn(x.amt)}৳</b></label>`).join("")+
+ `<div class="tt"><span>মোট</span><b id="t">০৳</b></div><button id="b" onclick="go()">পেমেন্ট করুন</button>`:`<p style="padding:14px 0">কোনো বকেয়া নেই 🎉</p>`)+
+ `<button class="sec" onclick="home()">অন্য আইডি দিন</button>`}
 function sel(){return[...document.querySelectorAll("input[type=checkbox]:checked")].map(c=>D.items[+c.value])}
 function tot(){$("t").textContent=bn(sel().reduce((a,x)=>a+ +x.amt,0))+"৳"}
 async function go(){const s=sel();if(!s.length){alert("কোন মাসের বেতন দিচ্ছেন বাছুন");return}
-$("b").disabled=true;$("b").textContent="অপেক্ষা করুন...";
-const r=await SB.functions.invoke("up-pay",{body:{action:"create",uid:U,phone:P,items:s.map(x=>({m:x.m,sub:x.sub}))}});
-if(r.error||!r.data||!r.data.url){alert((r.data&&r.data.error)||"পেমেন্ট শুরু করা যায়নি, আবার চেষ্টা করুন");$("b").disabled=false;$("b").textContent="পেমেন্ট করুন";return}
-ls("bc_order",String(r.data.order_id));location.href=r.data.url}
-home()</script></body></html>
+ $("b").disabled=true;$("b").textContent="অপেক্ষা করুন...";
+ const r=await SB.functions.invoke("up-pay",{body:{action:"create",uid:U,phone:"",items:s.map(x=>({m:x.m,sub:x.sub}))}});
+ if(r.error||!r.data||!r.data.url){alert((r.data&&r.data.error)||"পেমেন্ট শুরু করা যায়নি");$("b").disabled=false;$("b").textContent="পেমেন্ট করুন";return}
+ location.href=r.data.url}
+const inv=new URLSearchParams(location.search).get("invoice_id");
+if(inv){$("app").innerHTML="<p>পেমেন্ট যাচাই হচ্ছে...</p>";
+ SB.functions.invoke("up-pay",{body:{invoice_id:inv}}).then(r=>{const s=r.data&&r.data.status;
+  $("app").innerHTML=(s=="paid"?`<h2>✅ পেমেন্ট নিশ্চিত হয়েছে</h2><p>আপনার বেতন পরিশোধিত হয়েছে। ধন্যবাদ।</p>`
+  :`<h2>⏳ যাচাই চলছে</h2><p>পেমেন্ট এখনো নিশ্চিত হয়নি। কিছুক্ষণ পর নিজে থেকেই হয়ে যাবে। না হলে কোচিংয়ে জানান।</p>`)+`<a href="home.html"><button class="sec">হোমে ফিরুন</button></a>`})}
+else home()
+</script></body></html>

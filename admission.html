@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8"><title>ভর্তি ফর্ম</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>:root{--pr:#0f766e;--prd:#0b5a54;--prl:#e6f4f2;--prdd:#083f3b;--prring:#ccebe7;--prsh2:rgba(15,118,110,.2);--prsh3:rgba(15,118,110,.3);--prsh4:rgba(11,90,84,.18);--ac:#f59e0b;--tx:#102a2d;--mu:#5f7478;--bd:#dfe7e8;--bg:#f2f6f6;--ok:#15803d;--er:#dc2626}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;font-size:16px;line-height:1.5;color:var(--tx);background:var(--bg)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid #5eead4;outline-offset:2px}
+.btn{background:var(--pr);color:#fff;border:1px solid var(--pr);border-radius:10px;padding:10px 20px;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--prd)}.btn:disabled{opacity:.55;cursor:wait}
+.btn.sec{background:#fff;color:var(--pr);border-color:var(--bd)}.btn.sec:hover{background:var(--prl)}
+.btn.dng{background:#fff;color:var(--er);border-color:#f3c9c9}.btn.dng:hover{background:#fef2f2}
+.btn.sm{padding:4px 12px;font-size:14px;border-radius:8px}
+.fld{display:block;margin-bottom:16px}.fld>span{display:block;font-size:14px;font-weight:500;color:var(--mu);margin-bottom:4px}
+.fld input,.fld select{width:100%;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:#fff;font-size:16px}
+.fld input:focus,.fld select:focus{outline:0;border-color:var(--pr);box-shadow:0 0 0 3px var(--prring)}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 18px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid var(--bd);background:#fff;border-radius:10px;padding:8px 16px;cursor:pointer}
+.seg button.on{background:var(--pr);border-color:var(--pr);color:#fff;font-weight:600}
+.badge{display:inline-block;border-radius:20px;padding:1px 10px;font-size:13px;font-weight:600}
+.b-ok{background:#dcfce7;color:var(--ok)}.b-no{background:#fef3c7;color:#92400e}.b-gone{background:#fee2e2;color:var(--er)}.b-sub{background:var(--prl);color:var(--prd);font-weight:500}
+#md{position:fixed;inset:0;background:rgba(16,42,45,.6);display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:16px;z-index:50}
+#md .in{background:#fff;border-radius:16px;padding:18px;max-width:620px;width:100%}
+.doc{background:#fff;border:1px solid #cfe0e0;border-radius:12px;overflow:hidden;color:#102a2d;font-family:"Hind Siliguri","Noto Sans Bengali",sans-serif}
+.dh{background:var(--pr);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.dh b{font-size:24px}.dh span{font-size:14px;opacity:.95;text-align:right}
+.db{padding:16px 18px}.dtop{display:flex;gap:14px;align-items:center}
+.dph{width:92px;height:114px;object-fit:cover;border-radius:10px;border:1px solid #cfe0e0}
+.did{display:inline-block;background:#fef3c7;color:#92400e;border-radius:6px;padding:2px 10px;font-weight:700;font-size:15px}
+.dn{font-size:22px;font-weight:700;margin-top:6px}
+.dt{width:100%;border-collapse:collapse;margin-top:12px}.dt td,.dt th{padding:6px 4px;border-bottom:1px solid #e6eeee;font-size:14px;text-align:left;vertical-align:top;color:#102a2d}
+.dt th{color:#5f7478;font-weight:500}.dt td:first-child{color:#5f7478;width:34%}.dt.k td:first-child{color:#102a2d;width:auto}
+.dsub{display:inline-block;border-radius:6px;padding:0 8px;font-weight:600}
+.dfoot{background:var(--prl);padding:12px 18px;display:flex;justify-content:space-between;font-weight:700;gap:10px;flex-wrap:wrap}
+.stamp{position:absolute;right:20px;bottom:64px;border:3px solid #15803d;color:#15803d;font-weight:700;padding:2px 14px;transform:rotate(-10deg);font-size:20px;border-radius:8px}
+
+.er{display:block;color:var(--er);font-size:13px;font-style:normal;margin-top:3px}.er:empty{display:none}
+@media (prefers-reduced-motion:no-preference){
+.btn{transition:transform .15s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px var(--prsh3)}
+.btn:active{transform:translateY(0);box-shadow:none}
+.btn.sec:hover{box-shadow:0 4px 12px rgba(16,42,45,.14)}.btn.dng:hover{box-shadow:0 4px 12px rgba(220,38,38,.18)}
+.seg button,.bgs button{transition:transform .15s,background .2s,box-shadow .2s,border-color .2s}
+.seg button:hover,.bgs button:hover{transform:translateY(-2px);border-color:var(--pr);box-shadow:0 5px 12px var(--prsh2)}
+.seg button:active,.bgs button:active{transform:scale(.94)}
+.fld input,.fld select{transition:border-color .2s,box-shadow .2s}
+#md{animation:fd .2s}#md .in{animation:pp .25s ease-out}
+.stamp{animation:sl .5s cubic-bezier(.2,1.4,.4,1) .2s backwards}
+@keyframes fd{from{opacity:0}}@keyframes pp{from{opacity:0;transform:scale(.94) translateY(12px)}}@keyframes sl{from{opacity:0;transform:rotate(-10deg) scale(2.6)}}}
+
+.shell{display:grid;grid-template-columns:380px minmax(0,1fr);min-height:100vh}
+.hero{background:var(--pr);color:#fff;padding:44px 34px;position:sticky;top:0;height:100vh;overflow:auto}
+.hero h1{margin:0;font-size:40px;line-height:1.2}.hero .tl{margin:8px 0 28px;opacity:.9;font-size:18px}
+.hero h3{margin:22px 0 8px;font-size:15px;font-weight:600;opacity:.8}
+.hr{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.2);font-size:15px}
+.hr i{font-style:normal;opacity:.8;white-space:nowrap}
+.fee{margin-top:24px;background:rgba(255,255,255,.12);border-radius:14px;padding:14px 16px}.fee b{font-size:22px;color:#fde68a}
+.pane{padding:36px clamp(16px,5vw,64px) 60px;max-width:820px;width:100%}
+.steps{display:flex;gap:8px;margin-bottom:28px}
+.st{flex:1;display:flex;align-items:center;gap:10px;color:var(--mu);font-size:15px}
+.st em{flex:none;width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--bd);display:grid;place-items:center;font-style:normal;font-weight:700}
+.st.on{color:var(--tx);font-weight:600}.st.on em{background:var(--pr);border-color:var(--pr);color:#fff}.st.dn em{background:var(--prl);border-color:var(--pr);color:var(--pr)}
+.card{background:#fff;border:1px solid var(--bd);border-radius:16px;padding:24px}
+.card h2{margin:0 0 4px;font-size:24px}.card .hint{margin:0 0 20px;color:var(--mu)}
+.av{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.av img{width:84px;height:104px;border-radius:12px;object-fit:cover;border:1px solid var(--bd);background:var(--prl)}
+.bgs{display:flex;gap:6px;flex-wrap:wrap}.bgs button{width:52px;padding:8px 0;border:1px solid var(--bd);background:#fff;border-radius:10px;cursor:pointer}.bgs button.on{background:var(--pr);color:#fff;border-color:var(--pr);font-weight:600}
+.bt{font-weight:600;color:var(--prd);margin:20px 0 10px}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:6px}
+.sc{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--bd);border-radius:14px;padding:14px 14px 14px 18px;cursor:pointer;position:relative;border-left:6px solid var(--c)}
+.sc.on{border-color:var(--c);background:color-mix(in srgb,var(--c) 9%,#fff)}
+.sc b{display:block;font-size:18px}.sc small{display:block;color:var(--mu)}.sc .pr{margin-top:6px;font-weight:600;color:var(--c)}
+.sc .ck{position:absolute;right:12px;top:12px;width:24px;height:24px;border-radius:50%;border:2px solid var(--bd);display:grid;place-items:center;color:#fff;font-size:14px}.sc.on .ck{background:var(--c);border-color:var(--c)}
+.tot{margin-top:18px;background:var(--prl);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.rv{display:grid;grid-template-columns:140px 1fr;gap:6px 14px;margin:0}.rv dt{color:var(--mu)}.rv dd{margin:0;font-weight:600}
+.nv{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.lgn{max-width:400px;margin:12vh auto;background:#fff;border:1px solid var(--bd);border-radius:16px;padding:28px}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.hero{position:static;height:auto;padding:26px 20px}.hero h1{font-size:32px}.hero .tl{margin-bottom:6px}.hero .more{display:none}.st span{display:none}.rv{grid-template-columns:1fr}}
+
+.er{display:block}
+.idc{width:316px;background:#fff;border-radius:22px;overflow:hidden;border:1px solid #cfe0e0;box-shadow:0 14px 34px var(--prsh4);font-family:"Hind Siliguri","Noto Sans Bengali",sans-serif;color:#102a2d;position:relative}
+.idh{background:linear-gradient(135deg,var(--prdd),var(--pr));color:#fff;text-align:center;padding:16px 14px 54px;position:relative}
+.idh b{display:block;font-size:24px;line-height:1.2}.idh small{font-size:12.5px;opacity:.88}
+.idh i{position:absolute;border-radius:50%;background:rgba(255,255,255,.1)}
+.idh i:nth-child(1){width:90px;height:90px;right:-24px;top:-30px}.idh i:nth-child(2){width:54px;height:54px;left:-14px;bottom:10px;background:rgba(245,158,11,.35)}
+.idp{width:112px;height:112px;border-radius:50%;margin:-44px auto 0;border:5px solid #fff;background:var(--prl);overflow:hidden;position:relative;box-shadow:0 6px 16px rgba(16,42,45,.2)}
+.idp img{width:100%;height:100%;object-fit:cover;display:block}
+.idn{text-align:center;font-size:22px;font-weight:700;margin-top:10px;padding:0 14px;line-height:1.3}
+.idcl{text-align:center;color:#5f7478;font-size:13.5px}
+.idu{margin:10px auto 0;display:table;background:#fef3c7;color:#92400e;border:2px dashed #f59e0b;border-radius:10px;padding:3px 18px;font-weight:700;font-size:20px;letter-spacing:.5px}
+.idul{text-align:center;font-size:11.5px;color:#5f7478;margin-top:3px}
+.idg{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;padding:12px 20px 0;font-size:13px}
+.idg span{display:block;color:#5f7478;font-size:11.5px}.idg b{display:block;font-weight:600;word-break:break-word}
+.idsb{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;padding:12px 16px 0}
+.idsb em{font-style:normal;font-size:12px;font-weight:600;border-radius:6px;padding:1px 9px}
+.idbc{margin:14px 20px 0;height:38px;display:flex;align-items:stretch;justify-content:center;gap:0}
+.idbc i{display:block;background:#102a2d}
+.idf{margin-top:12px;background:var(--prl);color:var(--prd);text-align:center;font-size:12px;padding:8px 10px;font-weight:500}
+@media (prefers-reduced-motion:no-preference){
+.sc{transition:transform .18s,box-shadow .2s,background .2s}.sc:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(16,42,45,.14)}.sc:active{transform:scale(.98)}
+.sc.on .ck{animation:ck .28s cubic-bezier(.2,1.6,.4,1)}@keyframes ck{from{transform:scale(0)}}
+#bd.anim .card{animation:up .4s ease-out}@keyframes up{from{opacity:0;transform:translateY(16px)}}
+.hr{transition:padding .2s,background .2s}.hr:hover{padding-left:10px;background:rgba(255,255,255,.1)}
+.fee{transition:transform .25s}.fee:hover{transform:scale(1.03)}.av img{transition:transform .25s}.av img:hover{transform:scale(1.06) rotate(-1.5deg)}
+.st em{transition:background .3s,color .3s,transform .3s}.st.on em{transform:scale(1.15)}
+.hero h1{animation:up .6s ease-out}.hero .more{animation:up .8s ease-out}}
+</style></head><body>
+<div id="app"><p style="padding:24px">লোড হচ্ছে...</p></div>
+<div id="md"><div class="in" id="mdin"></div></div>
+<script>
+const ADM=1000,BG=["A+","A-","B+","B-","O+","O-","AB+","AB-"];
+const DOW=["শনি","রবি","সোম","মঙ্গল","বুধ","বৃহস্পতি","শুক্র"];
+let SUB={},KEYS=[];
+const BN="০১২৩৪৫৬৭৮৯",bn=x=>String(x).replace(/\d/g,d=>BN[d]);
+const per=h=>h<5?"রাত":h<12?"সকাল":h<16?"দুপুর":h<18?"বিকাল":h<20?"সন্ধ্যা":"রাত";
+function t12(t){const[h,m]=t.split(":").map(Number);return{p:per(h),s:bn(h%12||12)+(m?":"+bn(String(m).padStart(2,"0")):"")}}
+const fmtRange=(a,b)=>{if(!a||!b)return"";const x=t12(a),y=t12(b);return x.p+" "+x.s+(x.p==y.p?"–"+y.s:" থেকে "+y.p+" "+y.s)};
+const mins=t=>{const[h,m]=(t||"0:0").split(":").map(Number);return h*60+m};
+function setSub(rows){rows=[...rows].sort((a,b)=>{const da=Math.min(...(a.days||[]).map(d=>DOW.indexOf(d)),9),db=Math.min(...(b.days||[]).map(d=>DOW.indexOf(d)),9);return da-db||(a.days||[]).join().localeCompare((b.days||[]).join())||mins(a.start_t)-mins(b.start_t)});
+SUB={};rows.forEach(r=>{const days=r.days||[];SUB[r.code]={id:r.id,code:r.code,n:r.subject,t:r.name,d:days.join(", "),s:fmtRange(r.start_t,r.end_t),c:r.color||"#0f766e",f:r.fee==null?700:+r.fee,photo:r.photo,active:r.active!==false}});KEYS=rows.map(r=>r.code)}
+const fee=k=>SUB[k]?SUB[k].f:0,sumFee=a=>a.reduce((x,k)=>x+fee(k),0);
+function groups(){const m=new Map();KEYS.forEach(k=>{const d=SUB[k].d;if(!m.has(d))m.set(d,[]);m.get(d).push(k)});return[...m]}
+const tk=n=>bn(Number(n).toLocaleString("en-US"))+"৳";
+const MN=["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"];
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const mlabel=m=>MN[+m.slice(5)-1]+" "+bn(m.slice(0,4));
+const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// ===== আপনার Supabase তথ্য এখানে বসান (Project Settings > API) =====
+const SB_URL="https://rfopkndpxafctfkqvmqj.supabase.co",SB_KEY="sb_publishable_EH_BnOXjZ3EtUJ3wl9-8CA_2_Glbkyi";
+// =====================================================================
+let SB=null;
+const DEF_SLUG="best";
+const COACH_SLUG=new URLSearchParams(location.search).get("c")||DEF_SLUG;
+const BR={name:"",tagline:"",note:"",logo:"",classes:["নবম","দশম"]};
+function applyBrand(o){if(!o)return;if(o.name)BR.name=o.name;BR.note=(o.card_note||"").trim();BR.logo=o.logo_url||"";
+if(Array.isArray(o.classes)&&o.classes.length)BR.classes=o.classes;
+BR.tagline=BR.classes.join(" ও ")+" শ্রেণি"+(BR.note?", "+BR.note:"");
+if(typeof F!=="undefined"&&!BR.classes.includes(F.cls))F.cls=BR.classes[0];
+const R=document.documentElement.style,col=/^#[0-9a-fA-F]{6}$/.test(o.color||"")?o.color:null;
+if(col){R.setProperty("--pr",col);R.setProperty("--prd","color-mix(in srgb,"+col+" 70%,#000)");R.setProperty("--prdd","color-mix(in srgb,"+col+" 45%,#000)");R.setProperty("--prl","color-mix(in srgb,"+col+" 12%,#fff)");R.setProperty("--prring","color-mix(in srgb,"+col+" 22%,#fff)");R.setProperty("--prsh2","color-mix(in srgb,"+col+" 20%,transparent)");R.setProperty("--prsh3","color-mix(in srgb,"+col+" 30%,transparent)");R.setProperty("--prsh4","color-mix(in srgb,"+col+" 18%,transparent)");
+let m=document.querySelector('meta[name=theme-color]');if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.content=col}
+document.title=BR.name+", ভর্তি ফর্ম"}
+const brLogo=()=>BR.logo?`<img src="${esc(BR.logo)}" alt="" crossorigin="anonymous" style="width:44px;height:44px;border-radius:12px;object-fit:cover;background:#fff;display:block;margin:0 auto 6px">`:"";
+async function pubBrand(){try{const r=await SB.rpc("coaching_admission",{p_slug:COACH_SLUG});const d=r.data;if(d){applyBrand(d.coaching);setSub(d.teachers||[]);if(d.schools&&d.schools.length){schools=d.schools;F.school=schools[0]}if(!d.coaching)SETUP="এই লিংকের কোচিং পাওয়া যায়নি বা বন্ধ আছে"}}catch(e){SETUP=String(e&&e.message||e)}}
+async function init(cb){
+if(SB_KEY=="YOUR_ANON_PUBLIC_KEY"){$("app").innerHTML='<div class="lgn"><h2>Supabase তথ্য বসানো হয়নি</h2><p>ফাইলের উপরের দিকে <b>SB_URL</b> ও <b>SB_KEY</b> বসান।</p></div>';return}
+SB=supabase.createClient(SB_URL,SB_KEY);
+await pubBrand();
+if(!window.NEEDAUTH){cb();return}
+$("app").innerHTML=`<div class="lgn"><div class="lgo">${esc(BR.name)}</div><h2>অ্যাডমিন লগইন</h2><label class="fld"><span>ইমেইল</span><input id="le" type="email" autocomplete="username"></label><label class="fld"><span>পাসওয়ার্ড</span><input id="lp" type="password" autocomplete="current-password"></label><p id="lm" style="color:var(--er);min-height:24px;margin:0 0 8px"></p><button class="btn" style="width:100%" onclick="SB.auth.signInWithPassword({email:$('le').value,password:$('lp').value}).then(r=>{if(r.error)$('lm').textContent='ত্রুটি: '+r.error.message})">লগইন করুন</button></div>`;
+let started=false;SB.auth.onAuthStateChange((ev,ss)=>{if(ss&&!started){started=true;cb()}})}
+function adm(s){const n=s.sub.length;
+return`<div class="doc"><div class="dh"><b>${esc(BR.name)}</b><span>ভর্তি কার্ড<br>${esc(s.cls)} শ্রেণি${BR.note?", "+esc(BR.note):""}</span></div><div class="db">
+<div class="dtop">${s.photo?`<img class="dph" src="${s.photo}">`:""}<div><span class="did">${s.uid}</span><div class="dn">${esc(s.name)}</div><div style="color:#5f7478">${esc(s.school)}</div></div></div>
+<table class="dt">${[["ঠিকানা",esc(s.addr)],["মোবাইল",bn(esc(s.phone))],["অভিভাবকের মোবাইল",bn(esc(s.gphone))],["রক্তের গ্রুপ",s.bg],["লিঙ্গ",s.gender],["ভর্তির তারিখ",bn(s.date)]].map(r=>`<tr><td>${r[0]}</td><td><b>${r[1]}</b></td></tr>`).join("")}</table>
+<table class="dt k" style="margin-top:16px"><tr><th>বিষয়</th><th>স্যার</th><th>বার</th><th>সময়</th><th>মাসিক</th></tr>${s.sub.map(k=>`<tr><td><span class="dsub" style="background:${SUB[k].c}1f;color:${SUB[k].c}">${SUB[k].n}</span></td><td>${SUB[k].t}</td><td>${SUB[k].d}</td><td>${SUB[k].s}</td><td>${tk(fee(k))}</td></tr>`).join("")}</table>
+</div>
+<div class="dfoot"><span>ভর্তি ফি ${tk(ADM)} + মাসিক ${tk(sumFee(s.sub))}</span><span>প্রথম মাসে মোট ${tk(ADM+sumFee(s.sub))}</span></div></div>`}
+const IDPH="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='112' height='112'%3E%3Crect width='112' height='112' fill='%23e6f4f2'/%3E%3Ccircle cx='56' cy='44' r='20' fill='%2399c9c3'/%3E%3Cpath d='M16 112c4-34 76-34 80 0z' fill='%2399c9c3'/%3E%3C/svg%3E";
+function idBars(u){let h=5381,o="";for(const c of String(u))h=(h*33+c.charCodeAt(0))>>>0;const w=[1,2,3];for(let i=0;i<46;i++){h=(h*1103515245+12345)>>>0;const k=w[(h>>>16)%3];o+=`<i style="width:${k}px;${i%2?"background:transparent;":""}"></i>`}return o}
+function idc(s){return`<div class="idc"><div class="idh"><i></i><i></i>${brLogo()}<b>${esc(BR.name)}</b><small>শিক্ষার্থী পরিচয়পত্র</small></div>
+<div class="idp"><img src="${s.photo||IDPH}" alt=""></div><div class="idn">${esc(s.name)}</div><div class="idcl">${esc(s.cls)} শ্রেণি, ${esc(s.school)}</div>
+<div class="idu">${esc(s.uid)}</div><div class="idul">ইউনিক আইডি নম্বর</div>
+<div class="idg"><div><span>মোবাইল</span><b>${bn(esc(s.phone))}</b></div><div><span>অভিভাবকের মোবাইল</span><b>${bn(esc(s.gphone))}</b></div><div><span>রক্তের গ্রুপ</span><b>${esc(s.bg)}</b></div><div><span>ভর্তির তারিখ</span><b>${bn(esc(s.date))}</b></div></div>
+<div class="idsb">${s.sub.filter(k=>SUB[k]).map(k=>`<em style="background:${SUB[k].c}1f;color:${SUB[k].c}">${SUB[k].n}</em>`).join("")}</div>
+<div class="idbc">${idBars(s.uid)}</div><div class="idf">বেতন দিতে শুধু এই আইডি নম্বর ব্যবহার করুন</div></div>`}
+function showId(s){$("mdin").innerHTML=`<div id="idw" style="display:flex;justify-content:center;padding:6px 0">${idc(s)}</div><p style="margin:10px 0 0;text-align:center;color:var(--mu);font-size:14px">আইডি কার্ডটি ছবি হিসেবে সেভ করে রাখুন। এই আইডি দিয়েই মাসিক বেতন দেওয়া যাবে।</p><div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn" onclick="dlId('${s.uid}')">আইডি কার্ড ডাউনলোড</button><button class="btn sec" id="slipb">ভর্তি স্লিপ দেখুন</button><button class="btn sec" onclick="cl()">বন্ধ করুন</button></div>`;$("slipb").onclick=()=>show(adm(s),s.uid);$("md").style.display="flex"}
+async function dlId(n){try{const c=await html2canvas(document.querySelector("#idw .idc"),{scale:3,backgroundColor:null,useCORS:true});c.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="আইডি_কার্ড_"+n+".png";document.body.appendChild(a);a.click();a.remove()},"image/png")}catch(e){alert("ডাউনলোড হয়নি: "+e.message)}}
+function show(html,name,noDl){$("mdin").innerHTML=html+`<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">${noDl?"":`<button class="btn" onclick="dl('${name}')">PNG ডাউনলোড</button>`}<button class="btn sec" onclick="cl()">বন্ধ করুন</button></div>`;$("md").style.display="flex"}
+function cl(){$("md").style.display="none"}
+async function dl(n){try{const c=await html2canvas(document.querySelector("#mdin .doc"),{scale:2,backgroundColor:"#fff"});
+c.toBlob(b=>{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=n+".png";document.body.appendChild(a);a.click();a.remove()},"image/png")}catch(e){alert("ডাউনলোড হয়নি: "+e.message)}}
+
+const fixPh=v=>v.replace(/[০-৯]/g,d=>"০১২৩৪৫৬৭৮৯".indexOf(d)).replace(/\D/g,"").slice(0,11),okPh=v=>/^01\d{9}$/.test(v);
+document.addEventListener("input",e=>{const t=e.target;if(t.dataset&&t.dataset.ph!=null){const v=fixPh(t.value);if(v!==t.value)t.value=v}});
+
+window.addEventListener("error",e=>{let b=document.getElementById("ebar");if(!b){b=document.createElement("div");b.id="ebar";b.style.cssText="position:fixed;left:0;right:0;bottom:0;background:#b91c1c;color:#fff;padding:10px 16px;z-index:99;font-size:14px;cursor:pointer";b.onclick=()=>b.remove();document.body.appendChild(b)}b.textContent="ত্রুটি: "+e.message+" (বন্ধ করতে চাপ দিন)"});
+window.addEventListener("unhandledrejection",e=>{window.dispatchEvent(new ErrorEvent("error",{message:String(e.reason&&e.reason.message||e.reason)}))});
+
+const F={name:"",addr:"",phone:"",gphone:"",date:today(),cls:"নবম",school:"",bg:"A+",gender:"ছেলে",nsc:""};
+let step=1,sel=[],photo="",schools=["A.K School","Bright School","Bornomala School"],busy=false;
+let ER={};
+document.addEventListener("input",e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){F[k]=e.target.value;delete ER[k];const m=e.target.parentNode.querySelector(".er");if(m)m.textContent=""}});
+let SETUP="";
+const seg=(k,a)=>`<div class="seg">${a.map(v=>`<button type="button" class="${F[k]==v?"on":""}" onclick="F.${k}='${v}';rb()">${v}</button>`).join("")}</div>`;
+const fld=(k,l,t)=>{const p=k=="phone"||k=="gphone";return`<label class="fld"><span>${l}</span><input data-k="${k}" ${p?`data-ph type="tel" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX"`:t?`type="${t}"`:""} value="${esc(F[k])}"><em class="er">${ER[k]||""}</em></label>`};
+function draw(){$("app").innerHTML=`<div class="shell"><aside class="hero">${BR.logo?`<img src="${esc(BR.logo)}" alt="" style="width:56px;height:56px;border-radius:14px;object-fit:cover;background:#fff;margin-bottom:10px">`:""}<h1>${esc(BR.name)}</h1><p class="tl">${esc(BR.tagline)}</p><div class="more">${groups().map(([d,ks])=>`<h3>${d}</h3>${ks.map(k=>`<div class="hr"><span>${SUB[k].n} (${SUB[k].t})</span><i>${SUB[k].s}</i></div>`).join("")}`).join("")}
+<div class="fee">ভর্তি ফি <b>${tk(ADM)}</b>, একবারই<br><small style="opacity:.85">মাসিক বেতন প্রতিটি বিষয়ের পাশে দেওয়া আছে</small></div></div></aside>
+<main class="pane"><div class="steps">${["ব্যক্তিগত তথ্য","বিষয় বাছাই","নিশ্চিত করুন"].map((t,i)=>`<div class="st ${step==i+1?"on":step>i+1?"dn":""}"><em>${step>i+1?"✓":bn(i+1)}</em><span>${t}</span></div>`).join("")}</div><div id="bd"></div></main></div>`;rb()}
+function rb(){let h="";
+if(step==1)h=`<div class="card"><h2>শিক্ষার্থীর তথ্য</h2><p class="hint">যে তথ্যগুলোর পাশে * আছে সেগুলো অবশ্যই দিতে হবে।</p>
+<div class="av"><img id="pv" src="${photo||PH}" alt=""><div><button type="button" class="btn sec sm" onclick="$('pf').click()">ছবি বাছুন</button><input id="pf" type="file" accept="image/*" hidden onchange="pic(this)"><div style="color:var(--mu);font-size:14px;margin-top:4px">পাসপোর্ট সাইজের ছবি ভালো</div></div></div>
+<div class="g2">${fld("name","শিক্ষার্থীর নাম *")}${fld("addr","ঠিকানা *")}${fld("phone","মোবাইল নম্বর *","tel")}${fld("gphone","অভিভাবকের মোবাইল নম্বর *","tel")}${fld("date","ভর্তির তারিখ","date")}
+<label class="fld"><span>স্কুল</span><select data-k="school" onchange="rb()">${schools.map(x=>`<option ${x==F.school?"selected":""}>${esc(x)}</option>`).join("")}<option value="__new" ${F.school=="__new"?"selected":""}>আমার স্কুল তালিকায় নেই</option></select></label>${F.school=="__new"?fld("nsc","নতুন স্কুলের নাম *"):""}</div>
+<div class="fld"><span>শ্রেণি</span>${seg("cls",BR.classes)}</div><div class="fld"><span>লিঙ্গ</span>${seg("gender",["ছেলে","মেয়ে"])}</div>
+<div class="fld"><span>রক্তের গ্রুপ</span><div class="bgs">${BG.map(v=>`<button type="button" class="${F.bg==v?"on":""}" onclick="F.bg='${v}';rb()">${v}</button>`).join("")}</div></div></div>`;
+if(step==2)h=`<div class="card"><h2>কোন কোন বিষয়ে পড়বে?</h2><p class="hint">একাধিক বিষয় বেছে নিতে পারবে। প্রতিটি ক্লাস ১ ঘণ্টা।</p>${!KEYS.length?`<p style="color:var(--mu)">এখনো কোনো ব্যাচ যোগ করা হয়নি। অ্যাডমিন প্যানেল থেকে শিক্ষক যোগ করুন।</p>`:""}${groups().map(([d,ks])=>`<div class="bt">${d}</div><div class="sg">${ks.map(k=>`<button type="button" class="sc ${sel.includes(k)?"on":""}" style="--c:${SUB[k].c}" onclick="tg('${k}')"><span class="ck">${sel.includes(k)?"✓":""}</span><b>${SUB[k].n}</b><small>${SUB[k].t}, ${SUB[k].s}</small><div class="pr">${tk(fee(k))} মাসে</div></button>`).join("")}</div>`).join("")}
+<div class="tot"><span>${sel.length?bn(sel.length)+"টি বিষয়, মাসিক "+tk(sumFee(sel)):"কোনো বিষয় বাছা হয়নি"}</span><b>${sel.length?"প্রথম মাসে মোট "+tk(ADM+sumFee(sel)):""}</b></div></div>`;
+if(step==3){const sc=F.school=="__new"?F.nsc:F.school;h=`<div class="card"><h2>সব ঠিক আছে কিনা দেখুন</h2><p class="hint">ভুল থাকলে "আগের ধাপ" এ গিয়ে ঠিক করুন।</p>
+<div class="av"><img src="${photo||PH}" alt=""></div><dl class="rv">${[["নাম",F.name],["ঠিকানা",F.addr],["মোবাইল",bn(F.phone)],["অভিভাবকের মোবাইল",bn(F.gphone)],["শ্রেণি",F.cls],["স্কুল",sc],["রক্তের গ্রুপ",F.bg],["লিঙ্গ",F.gender],["ভর্তির তারিখ",bn(F.date)]].map(r=>`<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join("")}</dl>
+<div class="bt">বিষয়</div>${sel.map(k=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)"><span><b style="color:${SUB[k].c}">${SUB[k].n}</b>, ${SUB[k].t}, ${SUB[k].d}, ${SUB[k].s}</span><b>${tk(fee(k))}</b></div>`).join("")}
+<div class="tot"><span>ভর্তি ফি ${tk(ADM)} + মাসিক বেতন ${tk(sumFee(sel))}</span><b>প্রথম মাসে মোট ${tk(ADM+sumFee(sel))}</b></div></div>`}
+h+=`<div class="nv">${step>1?`<button class="btn sec" onclick="go(-1)">আগের ধাপ</button>`:"<span></span>"}${step<3?`<button class="btn" onclick="go(1)">পরের ধাপ</button>`:`<button class="btn" id="sb" onclick="submitF()">ভর্তি নিশ্চিত করুন</button>`}</div>`;
+$("bd").innerHTML=(SETUP?`<div class="card" style="border-color:#f3c9c9;background:#fef2f2;margin-bottom:16px"><b>Database এখনো সেট করা হয়নি</b><br>Supabase এর SQL Editor এ <b>supabase.sql</b> run করুন (project: rfopkndpxafctfkqvmqj)।<br><small>${esc(SETUP)}</small></div>`:"")+h}
+const PH="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='104'%3E%3Crect width='84' height='104' fill='%23e6f4f2'/%3E%3Ccircle cx='42' cy='40' r='16' fill='%2399c9c3'/%3E%3Cpath d='M12 98c3-26 57-26 60 0z' fill='%2399c9c3'/%3E%3C/svg%3E";
+function tg(k){sel.includes(k)?sel=sel.filter(x=>x!=k):sel.push(k);sel.sort((a,b)=>KEYS.indexOf(a)-KEYS.indexOf(b));rb()}
+function ok1(){ER={};const sc=F.school=="__new"?F.nsc.trim():F.school;
+if(!F.name.trim())ER.name="শিক্ষার্থীর নাম লিখুন";if(!F.addr.trim())ER.addr="ঠিকানা লিখুন";
+if(!okPh(F.phone))ER.phone="মোবাইল নম্বর ঠিক ১১ সংখ্যার হতে হবে, যেমন 01712345678";
+if(!okPh(F.gphone))ER.gphone="অভিভাবকের নম্বরও ঠিক ১১ সংখ্যার হতে হবে";
+if(F.school=="__new"&&!sc)ER.nsc="স্কুলের নাম লিখুন";
+if(Object.keys(ER).length){rb();const e=document.querySelector(".er:not(:empty)");if(e)e.scrollIntoView({behavior:"smooth",block:"center"});return false}return true}
+function go(d){if(d>0){if(step==1&&!ok1())return;if(step==2&&!sel.length){alert("অন্তত একটি বিষয় বেছে নিন");return}}step+=d;draw();$("bd").classList.add("anim");setTimeout(()=>$("bd").classList.remove("anim"),450);window.scrollTo(0,0)}
+function pic(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=180;c.height=224;const x=c.getContext("2d"),k=Math.max(180/im.width,224/im.height);x.drawImage(im,(180-im.width*k)/2,(224-im.height*k)/2,im.width*k,im.height*k);photo=c.toDataURL("image/jpeg",.8);$("pv").src=photo};im.src=r.result};r.readAsDataURL(f)}
+async function submitF(){if(busy)return;if(!ok1()){step=1;draw();return}busy=true;$("sb").disabled=true;
+try{const sc=F.school=="__new"?F.nsc.trim():F.school;
+const q=await SB.rpc("admit",{p:{name:F.name.trim(),addr:F.addr.trim(),phone:F.phone.trim(),gphone:F.gphone.trim(),date:F.date,cls:F.cls,school:sc,bg:F.bg,gender:F.gender,sub:[...sel],photo,coaching:COACH_SLUG}});if(q.error)throw q.error;
+const s=q.data;Object.assign(F,{name:"",addr:"",phone:"",gphone:"",date:today(),nsc:"",school:schools[0]});sel=[];photo="";step=1;draw();showId(s)
+}catch(e){const m=e&&e.message||String(e);alert("ভর্তি সেভ হয়নি: "+m+(m.includes("schema cache")?"\n\nসমাধান: Supabase এ project rfopkndpxafctfkqvmqj খুলে SQL Editor এ supabase.sql run করুন, তারপর এই পেজ রিফ্রেশ করুন।":""));$("sb").disabled=false}busy=false}
+init(async()=>{draw()});
+
+</script></body></html>

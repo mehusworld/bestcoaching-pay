@@ -1,12 +1,12 @@
 <!DOCTYPE html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>বেস্ট কোচিং, বেতন দিন</title>
+<title>বেতন দিন</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
 :root{--pr:#0f766e;--prd:#0b5a54;--prl:#e6f4f2;--tx:#102a2d;--mu:#5f7478;--bd:#dfe7e8;--bg:#f2f6f6}
 *{box-sizing:border-box}
 body{font-family:"Hind Siliguri","Noto Sans Bengali",sans-serif;background:var(--bg);margin:0;color:var(--tx)}
-.top{background:linear-gradient(135deg,#083f3b,var(--pr));color:#fff;padding:22px 18px 70px}
+.top{background:linear-gradient(135deg,var(--prdd,#083f3b),var(--pr));color:#fff;padding:22px 18px 70px}
 .top .in{max-width:460px;margin:0 auto}
 .top a{color:#fff;text-decoration:none;font-size:14px;opacity:.9}
 .top h1{margin:10px 0 2px;font-size:26px}.top p{margin:0;opacity:.88;font-size:14px}
@@ -31,6 +31,10 @@ const $=id=>document.getElementById(id),BN="০১২৩৪৫৬৭৮৯",bn=x
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const MN=["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"];
 let D=null,U="";
+function applyBrand(c){if(!c)return;const R=document.documentElement.style,col=/^#[0-9a-fA-F]{6}$/.test(c.color||"")?c.color:null;
+if(col){R.setProperty("--pr",col);R.setProperty("--prd","color-mix(in srgb,"+col+" 70%,#000)");R.setProperty("--prdd","color-mix(in srgb,"+col+" 45%,#000)");R.setProperty("--prl","color-mix(in srgb,"+col+" 12%,#fff)")}
+if(c.name){document.title=c.name+", বেতন দিন";const p=document.querySelector(".top p");if(p)p.textContent=c.name+", শুধু আইডি নম্বর দিয়েই বেতন দিন"}}
+(async()=>{const q=new URLSearchParams(location.search).get("c");if(!q)return;try{const r=await SB.rpc("coaching_public",{p_slug:q});if(r.data)applyBrand(r.data)}catch(e){}})();
 function home(m){$("app").innerHTML=`<p style="margin:0 0 10px;color:var(--mu)">ভর্তি কার্ডে লেখা আইডি নম্বরটি দিন</p>
 <label for="u" style="font-size:14px;color:var(--mu)">শিক্ষার্থীর আইডি</label>
 <input type="text" id="u" placeholder="যেমন: BC260001" autocomplete="off" autocapitalize="characters" spellcheck="false" onkeydown="if(event.key=='Enter')look()">
@@ -38,7 +42,7 @@ function home(m){$("app").innerHTML=`<p style="margin:0 0 10px;color:var(--mu)">
 async function look(){U=$("u").value.trim().toUpperCase();if(!U){$("er").textContent="আইডি নম্বর লিখুন";return}
  $("lb").disabled=true;$("lb").textContent="খোঁজা হচ্ছে...";
  const r=await SB.rpc("pay_due",{p_uid:U,p_phone:""});
- if(r.error||!r.data){home("এই আইডি পাওয়া যায়নি। আইডি ঠিক আছে কিনা দেখুন।");return}D=r.data;list()}
+ if(r.error||!r.data){home("এই আইডি পাওয়া যায়নি। আইডি ঠিক আছে কিনা দেখুন।");return}D=r.data;applyBrand(D.coaching);list()}
 function list(){const it=D.items||[];$("app").innerHTML=`<div class="nm"><h3 style="margin:0">${esc(D.name)}</h3><span class="did">${esc(U)}</span></div>`+(it.length?
  `<p style="margin:0 0 6px;color:var(--mu);font-size:14px">যে মাসের বেতন দেবেন সেগুলো বেছে নিন</p>`+
  it.map((x,i)=>`<label class="i"><input type="checkbox" value="${i}" onchange="tot()"><span style="flex:1">${MN[+x.m.slice(5)-1]}, ${esc(x.name)}</span><b>${bn(x.amt)}৳</b></label>`).join("")+

@@ -30,7 +30,7 @@ const SB=supabase.createClient("https://rfopkndpxafctfkqvmqj.supabase.co","sb_pu
 const $=id=>document.getElementById(id),BN="০১২৩৪৫৬৭৮৯",bn=x=>String(x).replace(/\d/g,d=>BN[d]);
 const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const MN=["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"];
-let D=null,U="";
+let D=null,U="",L4="";
 function applyBrand(c){if(!c)return;const R=document.documentElement.style,col=/^#[0-9a-fA-F]{6}$/.test(c.color||"")?c.color:null;
 if(col){R.setProperty("--pr",col);R.setProperty("--prd","color-mix(in srgb,"+col+" 70%,#000)");R.setProperty("--prdd","color-mix(in srgb,"+col+" 45%,#000)");R.setProperty("--prl","color-mix(in srgb,"+col+" 12%,#fff)")}
 if(c.name){document.title=c.name+", বেতন দিন";const p=document.querySelector(".top p");if(p)p.textContent=c.name+", শুধু আইডি নম্বর দিয়েই বেতন দিন"}}
@@ -38,11 +38,13 @@ if(c.name){document.title=c.name+", বেতন দিন";const p=document.que
 function home(m){$("app").innerHTML=`<p style="margin:0 0 10px;color:var(--mu)">ভর্তি কার্ডে লেখা আইডি নম্বরটি দিন</p>
 <label for="u" style="font-size:14px;color:var(--mu)">শিক্ষার্থীর আইডি</label>
 <input type="text" id="u" placeholder="যেমন: BC260001" autocomplete="off" autocapitalize="characters" spellcheck="false" onkeydown="if(event.key=='Enter')look()">
+<label for="l4" style="font-size:14px;color:var(--mu);display:block;margin-top:10px">ভর্তির সময় দেওয়া ফোন নম্বরের শেষ ৪ সংখ্যা</label>
+<input type="tel" id="l4" maxlength="4" inputmode="numeric" placeholder="যেমন: 1234" autocomplete="off" onkeydown="if(event.key=='Enter')look()">
 <div class="er" id="er">${esc(m||"")}</div><button id="lb" onclick="look()">বকেয়া দেখুন</button>`}
-async function look(){U=$("u").value.trim().toUpperCase();if(!U){$("er").textContent="আইডি নম্বর লিখুন";return}
+async function look(){U=$("u").value.trim().toUpperCase();L4=($("l4").value||"").replace(/\D/g,"");if(!U){$("er").textContent="আইডি নম্বর লিখুন";return}if(L4.length!=4){$("er").textContent="ফোন নম্বরের শেষ ৪ সংখ্যা লিখুন";return}
  $("lb").disabled=true;$("lb").textContent="খোঁজা হচ্ছে...";
- const r=await SB.rpc("pay_due",{p_uid:U,p_phone:""});
- if(r.error||!r.data){home("এই আইডি পাওয়া যায়নি। আইডি ঠিক আছে কিনা দেখুন।");return}D=r.data;applyBrand(D.coaching);list()}
+ const r=await SB.rpc("pay_due_pub",{p_uid:U,p_last4:L4});
+ if(r.error||!r.data){home("আইডি বা ফোনের শেষ ৪ সংখ্যা মিলছে না। ঠিক আছে কিনা দেখুন (বারবার ভুল হলে ১৫ মিনিট অপেক্ষা করতে হবে)।");return}D=r.data;applyBrand(D.coaching);list()}
 function list(){const it=D.items||[];$("app").innerHTML=`<div class="nm"><h3 style="margin:0">${esc(D.name)}</h3><span class="did">${esc(U)}</span></div>`+(it.length?
  `<p style="margin:0 0 6px;color:var(--mu);font-size:14px">যে মাসের বেতন দেবেন সেগুলো বেছে নিন</p>`+
  it.map((x,i)=>`<label class="i"><input type="checkbox" value="${i}" onchange="tot()"><span style="flex:1">${MN[+x.m.slice(5)-1]}, ${esc(x.name)}</span><b>${bn(x.amt)}৳</b></label>`).join("")+
@@ -52,7 +54,7 @@ function sel(){return[...document.querySelectorAll("input[type=checkbox]:checked
 function tot(){$("t").textContent=bn(sel().reduce((a,x)=>a+ +x.amt,0))+"৳"}
 async function go(){const s=sel();if(!s.length){alert("কোন মাসের বেতন দিচ্ছেন বাছুন");return}
  $("b").disabled=true;$("b").textContent="অপেক্ষা করুন...";
- const r=await SB.functions.invoke("up-pay",{body:{action:"create",uid:U,phone:"",items:s.map(x=>({m:x.m,sub:x.sub}))}});
+ const r=await SB.functions.invoke("up-pay",{body:{action:"create",uid:U,last4:L4,phone:"",items:s.map(x=>({m:x.m,sub:x.sub}))}});
  if(r.error||!r.data||!r.data.url){alert((r.data&&r.data.error)||"পেমেন্ট শুরু করা যায়নি");$("b").disabled=false;$("b").textContent="পেমেন্ট করুন";return}
  location.href=r.data.url}
 const inv=new URLSearchParams(location.search).get("invoice_id");

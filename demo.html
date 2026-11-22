@@ -96,22 +96,6 @@ main{position:relative;z-index:3;max-width:760px;margin:-62px auto 0;padding:0 1
 .foot{text-align:center;margin-top:30px;font-size:12.5px;color:var(--mu)}
 .foot b{color:var(--pr)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-
-/* ---------- login info sheet ---------- */
-.ov{position:fixed;inset:0;z-index:50;background:rgba(16,42,45,.55);display:none;align-items:flex-end;justify-content:center;padding:0}
-.ov.show{display:flex}
-.sh{width:100%;max-width:520px;background:#fff;border-radius:26px 26px 0 0;padding:24px 22px calc(22px + env(safe-area-inset-bottom));animation:up .35s both}
-@media(min-width:641px){.ov{align-items:center;padding:18px}.sh{border-radius:26px}}
-.sh h3{font-size:21px;color:var(--prd)}
-.sh .sub{margin-top:4px;font-size:14px;color:var(--mu);line-height:1.6}
-.cr{margin-top:14px;border:1.5px solid var(--bd);border-radius:18px;padding:4px 14px}
-.cr .r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--bd);font-size:15px}
-.cr .r:last-child{border:0}.cr .r span{color:var(--mu)}.cr .r b{word-break:break-all;text-align:right}
-.cp{border:1px solid var(--bd);background:var(--prl);color:var(--prd);border-radius:8px;padding:3px 11px;font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;margin-left:8px}
-.btns{display:flex;gap:10px;margin-top:16px}
-.bt{flex:1;border:0;border-radius:14px;padding:13px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
-.bt.go2{background:var(--pr);color:#fff}.bt.x{background:var(--prl);color:var(--prd);flex:0 0 auto;padding:13px 20px}
-.warn{margin-top:12px;font-size:12.5px;line-height:1.6;color:#8a5a00;background:#fff7e6;border:1px solid #f5d08a;border-radius:12px;padding:9px 12px}
 </style></head>
 <body>
 <header>
@@ -138,7 +122,7 @@ main{position:relative;z-index:3;max-width:760px;margin:-62px auto 0;padding:0 1
       <div class="go">ফর্ম পূরণ করুন <span class="arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
     </a>
 
-    <a class="card c2" href="portal.html" data-q="1" data-k="portal">
+    <a class="card c2" href="portal.html" data-q="1">
       <span class="glow"></span><span class="badge">শিক্ষক ও মালিক</span>
       <div class="ico"><svg viewBox="0 0 40 40" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="20" cy="13" r="6.5"/><path d="M7 34c1.5-7 7-11 13-11s11.5 4 13 11"/>
@@ -148,7 +132,7 @@ main{position:relative;z-index:3;max-width:760px;margin:-62px auto 0;padding:0 1
       <div class="go">লগইন করুন <span class="arrow"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
     </a>
 
-    <a class="card c4" href="student.html" data-k="student">
+    <a class="card c4" href="student.html" data-q="1">
       <span class="glow"></span><span class="badge">শিক্ষার্থী লগইন</span>
       <div class="ico"><svg viewBox="0 0 40 40" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20 7 4 15l16 8 16-8z"/><path d="M10 20v7c0 3 5 5 10 5s10-2 10-5v-7"/>
@@ -161,43 +145,6 @@ main{position:relative;z-index:3;max-width:760px;margin:-62px auto 0;padding:0 1
   <div class="foot">© <b id="ft">ডেমো কোচিং</b></div>
 </main>
 
-
-<div class="ov" id="ov"><div class="sh">
-  <h3 id="mt"></h3><div class="sub" id="ms"></div>
-  <div class="cr" id="mr"></div>
-  <div class="warn" id="mw" hidden></div>
-  <div class="btns"><button class="bt x" id="mx">বন্ধ</button><button class="bt go2" id="mg">খুলুন →</button></div>
-</div></div>
-<script>
-/* ===== ডেমো লগইন তথ্য: এখানে বদলাতে পারেন (পাসওয়ার্ড খালি রাখলে সেই সারি দেখাবে না) ===== */
-var DEMO={
-  portal:{t:"মালিক ও শিক্ষক পোর্টাল",s:"নিচের ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন।",
-    rows:[["মালিকের ইমেইল","admin@demo.com"],["পাসওয়ার্ড",""],["শিক্ষকের ইমেইল",""],["শিক্ষকের পাসওয়ার্ড",""]]},
-  student:{t:"ছাত্র পোর্টাল",s:"নিচের আইডি ও পাসওয়ার্ড দিয়ে লগইন করুন। বেতন ট্যাবও খুলে দেখতে পারেন।",
-    rows:[["ছাত্রের আইডি","DM260001"],["পাসওয়ার্ড","123456"]],
-    warn:"ডেমোতে \"পেমেন্ট করুন\" চেপে গেটওয়ে পেজ পর্যন্ত দেখুন, টাকা পাঠাবেন না।"}
-};
-/* ====================================================================================== */
-var SBU="https://rfopkndpxafctfkqvmqj.supabase.co",SBK="sb_publishable_EH_BnOXjZ3EtUJ3wl9-8CA_2_Glbkyi";
-var slug=(new URLSearchParams(location.search).get("c")||"demo").toLowerCase().replace(/[^a-z0-9_-]/g,"");
-document.querySelectorAll("[data-q]").forEach(function(a){a.setAttribute("href",a.getAttribute("href")+"?c="+slug)});
-function $(i){return document.getElementById(i)}
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-/* কোচিংয়ের নাম ডাটাবেস থেকে (না পেলে "ডেমো কোচিং" থাকবে) */
-fetch(SBU+"/rest/v1/rpc/coaching_public",{method:"POST",headers:{apikey:SBK,Authorization:"Bearer "+SBK,"Content-Type":"application/json"},body:JSON.stringify({p_slug:slug})})
-.then(function(r){return r.json()}).then(function(o){if(o&&o.name){$("nm").textContent=o.name;$("ft").textContent=o.name;document.title=o.name}}).catch(function(){});
-var go="";
-function sheet(k,href){var d=DEMO[k],h="";go=href;
-  d.rows.forEach(function(r){if(!r[1])return;h+='<div class="r"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'<button class="cp" data-v="'+esc(r[1])+'">কপি</button></b></div>'});
-  if(!h)h='<div class="r"><span>লগইন তথ্য এখনো বসানো হয়নি</span></div>';
-  $("mt").textContent=d.t;$("ms").textContent=d.s;$("mr").innerHTML=h;
-  $("mw").hidden=!d.warn;$("mw").textContent=d.warn||"";$("ov").classList.add("show")}
-$("mx").onclick=function(){$("ov").classList.remove("show")};
-$("ov").addEventListener("click",function(e){if(e.target===$("ov"))$("ov").classList.remove("show")});
-$("mg").onclick=function(){location.href=go};
-$("mr").addEventListener("click",function(e){var b=e.target.closest(".cp");if(!b)return;
-  try{navigator.clipboard.writeText(b.dataset.v).then(function(){b.textContent="✓"})}catch(x){}});
-</script>
 <script>
 document.querySelectorAll(".card").forEach(function(c){
   // 3D tilt + glow: আঙুল/মাউস যেদিকে যায় কার্ড সেদিকে হেলে
@@ -213,10 +160,17 @@ document.querySelectorAll(".card").forEach(function(c){
   c.addEventListener("pointerleave",reset);
   c.addEventListener("pointercancel",reset);
   c.addEventListener("click",function(e){
-    e.preventDefault();var h=c.getAttribute("href"),k=c.getAttribute("data-k");c.classList.add("on");
-    if(k&&DEMO[k]){setTimeout(function(){c.classList.remove("on");sheet(k,h)},180);return}
+    e.preventDefault();var h=c.getAttribute("href");c.classList.add("on");
     setTimeout(function(){location.href=h},220);
   });
 });
+</script>
+
+<script>
+var SBU="https://rfopkndpxafctfkqvmqj.supabase.co",SBK="sb_publishable_EH_BnOXjZ3EtUJ3wl9-8CA_2_Glbkyi";
+var slug=(new URLSearchParams(location.search).get("c")||"demo").toLowerCase().replace(/[^a-z0-9_-]/g,"");
+document.querySelectorAll("[data-q]").forEach(function(a){a.setAttribute("href",a.getAttribute("href")+"?c="+slug)});
+fetch(SBU+"/rest/v1/rpc/coaching_public",{method:"POST",headers:{apikey:SBK,Authorization:"Bearer "+SBK,"Content-Type":"application/json"},body:JSON.stringify({p_slug:slug})})
+.then(function(r){return r.json()}).then(function(o){if(o&&o.name){document.getElementById("nm").textContent=o.name;document.getElementById("ft").textContent=o.name;document.title=o.name}}).catch(function(){});
 </script>
 </body></html>

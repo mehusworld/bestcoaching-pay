@@ -330,7 +330,7 @@ function fresh(s){const p=String(s||"").split("|"),t=+p[1];return p[0]&&(!t||Dat
 function saveO(id){PAY.OID=String(id);const v=PAY.OID+"|"+Date.now();ls("bc_order",v);try{window.name="bco:"+v}catch(e){}try{const u=new URL(location.href);u.searchParams.set("o",PAY.OID);history.replaceState(null,"",u.toString())}catch(e){}}
 function clearO(){PAY.OID="";ls("bc_order",null);try{if(/^bco:/.test(window.name))window.name=""}catch(e){}try{const u=new URL(location.href);u.searchParams.delete("o");u.searchParams.delete("invoice_id");history.replaceState(null,"",u.toString())}catch(e){}}
 function findO(){const q=new URLSearchParams(location.search).get("o");if(q)return q;const a=fresh(ls("bc_order"));if(a)return a;try{if(/^bco:/.test(window.name))return fresh(window.name.slice(4))}catch(e){}return""}
-async function loadPay(){PAY.l=true;try{const r=await SBc.rpc("pay_due",{p_uid:D.st.uid,p_phone:""});PAY.d=r.error?null:r.data;PAY.err=!PAY.d}catch(e){PAY.d=null;PAY.err=true}PAY.l=false;if(tab=="pay"&&!PAY.st)render()}
+async function loadPay(){PAY.l=true;try{const r=await SBc.rpc("stu_pay_due",{p_token:TK});PAY.d=r.error?null:r.data;PAY.err=!PAY.d}catch(e){PAY.d=null;PAY.err=true}PAY.l=false;if(tab=="pay"&&!PAY.st)render()}
 const pgrp=()=>{const g={};((PAY.d||{}).items||[]).forEach(x=>(g[x.m]=g[x.m]||[]).push(x));return g};
 function psel(){if(PAY.m=="pkg")return pgrp()[PAY.pk]||[];return[...document.querySelectorAll(".pi input:checked")].map(c=>PAY.d.items[+c.value])}
 function payTot(){const e=$("pt");if(e)e.textContent=money(psel().reduce((a,x)=>a+ +x.amt,0))}
@@ -347,7 +347,7 @@ ${PAY.m=="one"?`<p class="hint">যে মাসের বেতন দেবে
 :`<p class="hint">যে মাসের সব বিষয়ের বেতন একসাথে দেবে সেটা বাছো</p>`+pm.map(m=>`<label class="pi"><input type="radio" name="pm" value="${m}" ${PAY.pk==m?"checked":""} onchange="PAY.pk=this.value;payTot()"><span><b>${MN[+m.slice(5)-1]}, প্যাকেজ</b><br><small style="color:var(--mu)">${g[m].map(x=>esc(x.name)).join(", ")}</small></span><b>${money(g[m].reduce((a,x)=>a+ +x.amt,0))}</b></label>`).join("")}
 <div class="tt"><span>মোট</span><b id="pt">${PAY.m=="pkg"?money((g[PAY.pk]||[]).reduce((a,x)=>a+ +x.amt,0)):"০৳"}</b></div><button class="bt" id="pb" onclick="payGo()">${PAY.m=="pkg"?"প্যাকেজ পেমেন্ট করো":"পেমেন্ট করো"}</button>`)}
 async function payGo(){if(PAY.busy)return;const s=psel();if(!s.length){toast(PAY.m=="pkg"?"কোন মাসের প্যাকেজ নেবে বেছে নাও":"কোন মাসের বেতন দেবে বেছে নাও");return}
-PAY.busy=true;const b=$("pb");b.disabled=true;b.textContent="অপেক্ষা করো...";const u=D.st.uid,body=PAY.m=="pkg"?{action:"create",uid:u,pkg:true,month:PAY.pk}:{action:"create",uid:u,items:s.map(x=>({m:x.m,sub:x.sub}))};
+PAY.busy=true;const b=$("pb");b.disabled=true;b.textContent="অপেক্ষা করো...";const u=D.st.uid,body=PAY.m=="pkg"?{action:"create",token:TK,uid:u,pkg:true,month:PAY.pk}:{action:"create",token:TK,uid:u,items:s.map(x=>({m:x.m,sub:x.sub}))};
 let r;try{r=await SBc.functions.invoke("up-pay",{body})}catch(e){r={}}PAY.busy=false;
 if(!r||r.error||!r.data||!r.data.url){toast((r&&r.data&&r.data.error)||"পেমেন্ট শুরু করা যায়নি, আবার চেষ্টা করো");b.disabled=false;b.textContent="পেমেন্ট করো";return}
 saveO(r.data.order_id);ls("bc_paying","1");location.href=r.data.url}

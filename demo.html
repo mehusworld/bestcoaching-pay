@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<title>ডেমো কোচিং</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pr:#7c3aed;--prd:#5b21b6;--prl:#f1e8ff;--ac:#f59e0b;--tx:#102a2d;--mu:#5f7478;--bd:#e4e0ee;--bg:#f6f4fb}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;color:var(--tx);background:var(--bg);min-height:100vh;overflow-x:hidden}
+header{position:relative;overflow:hidden;color:#fff;padding:calc(34px + env(safe-area-inset-top)) 22px 96px;background:linear-gradient(135deg,var(--prd),var(--pr))}
+header::after{content:"";position:absolute;inset:auto -10% -1px -10%;height:60px;background:var(--bg);border-radius:50% 50% 0 0/100% 100% 0 0}
+.in{position:relative;z-index:2;max-width:760px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:58px;height:58px;border-radius:18px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);display:grid;place-items:center;overflow:hidden}
+.logo svg{width:34px;height:34px}.logo img{width:100%;height:100%;object-fit:cover}
+.brand h1{font-size:28px;font-weight:700;line-height:1.15}
+.tag{display:inline-block;margin-top:6px;font-size:12.5px;font-weight:700;background:rgba(255,255,255,.2);border-radius:99px;padding:3px 12px}
+.hero{margin-top:26px}.hero h2{font-size:clamp(22px,5.5vw,32px);font-weight:600;line-height:1.35}
+.hero p{margin-top:8px;opacity:.9;font-size:15px}
+main{position:relative;z-index:3;max-width:760px;margin:-62px auto 0;padding:0 18px calc(34px + env(safe-area-inset-bottom))}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
+.card{position:relative;display:block;text-decoration:none;color:inherit;background:#fff;border-radius:24px;padding:24px;border:1.5px solid var(--bd);box-shadow:0 10px 28px rgba(60,30,120,.10);transition:transform .2s,box-shadow .2s}
+.card:hover,.card:active{transform:translateY(-4px);box-shadow:0 18px 40px rgba(60,30,120,.18)}
+.card.w{grid-column:1/-1}
+.n{position:absolute;top:16px;right:18px;width:30px;height:30px;border-radius:50%;background:var(--prl);color:var(--prd);font-weight:700;display:grid;place-items:center;font-size:14px}
+.ico{font-size:34px;width:64px;height:64px;border-radius:20px;background:var(--prl);display:grid;place-items:center}
+.card h3{margin-top:14px;font-size:21px;color:var(--prd)}
+.card p{margin-top:6px;font-size:14.5px;line-height:1.7;color:var(--mu)}
+.go{margin-top:14px;padding-top:12px;border-top:1px dashed var(--bd);font-weight:700;color:var(--prd);font-size:14.5px}
+.box{margin-top:18px;background:#fff;border:1.5px solid var(--bd);border-radius:20px;padding:18px 20px}
+.box h4{font-size:16px;color:var(--prd);margin-bottom:10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--bd);font-size:14.5px}
+.row:last-child{border:0}.row span{color:var(--mu)}.row b{word-break:break-all;text-align:right}
+.cp{border:1px solid var(--bd);background:var(--prl);color:var(--prd);border-radius:8px;padding:2px 10px;font:inherit;font-size:12.5px;cursor:pointer;margin-left:8px}
+.warn{margin-top:16px;background:#fff7e6;border:1px solid #f5d08a;color:#8a5a00;border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.7}
+.foot{text-align:center;margin-top:24px;font-size:12.5px;color:var(--mu)}
+</style></head>
+<body>
+<header><div class="in">
+  <div class="brand">
+    <div class="logo" id="lg"><svg viewBox="0 0 40 40" fill="none"><path d="M20 8 4 16l16 8 16-8z" fill="#fff"/><path d="M10 21v7c0 3 5 5 10 5s10-2 10-5v-7l-10 5z" fill="#fcd34d"/></svg></div>
+    <div><h1 id="nm">ডেমো কোচিং</h1><span class="tag">লাইভ ডেমো</span></div>
+  </div>
+  <div class="hero"><h2>পুরো সিস্টেম নিজে ঘুরে দেখুন</h2><p>নিচের ১, ২, ৩ ক্রমে এক এক করে খুলুন।</p></div>
+</div></header>
+
+<main>
+  <div class="cards">
+    <a class="card" id="a1" href="admission.html"><span class="n">১</span><div class="ico">📝</div><h3>ভর্তি ফর্ম</h3><p>অভিভাবক অনলাইনে ফর্ম পূরণ করেন, ছবি দেন আর ভর্তির স্লিপ পান।</p><div class="go">ফর্ম খুলুন →</div></a>
+    <a class="card" id="a2" href="portal.html"><span class="n">২</span><div class="ico">👨‍🏫</div><h3>মালিক ও শিক্ষক পোর্টাল</h3><p>ছাত্র, হাজিরা, পরীক্ষা, নোটিশ, বেতন আর SMS পরিচালনা। ইমেইল-পাসওয়ার্ডে লগইন।</p><div class="go">পোর্টাল খুলুন →</div></a>
+    <a class="card w" id="a3" href="student.html"><span class="n">৩</span><div class="ico">🎓</div><h3>ছাত্র পোর্টাল (বেতন পরিশোধসহ)</h3><p>আইডি কার্ড, ক্লাস রুটিন, হাজিরা, পরীক্ষা, নোটিশ আর অনলাইনে বেতন দেওয়া, সবই এক জায়গায়।</p><div class="go">ছাত্র পোর্টাল খুলুন →</div></a>
+  </div>
+
+  <div class="box" id="cred" hidden><h4>ডেমো লগইন তথ্য</h4><div id="cr"></div></div>
+  <div class="warn">⚠️ এটা শুধু দেখানোর জন্য। ডেমোতে বেতনের পেমেন্ট সম্পূর্ণ করবেন না, "পেমেন্ট করুন" চেপে গেটওয়ে পেজ পর্যন্ত দেখে ফিরে আসুন।</div>
+  <div class="foot" id="ft"></div>
+</main>
+
+<script>
+/* ===== এই অংশটা আপনি বদলাতে পারেন =====
+   ডেমো লগইন তথ্য এখানে লিখলে পেজে দেখাবে (খালি রাখলে ঘরটা লুকানো থাকবে)।
+   শুধু ডেমোর জন্য বানানো আলাদা পাসওয়ার্ড দিন, আসল কোচিংয়ের কোনোটা নয়। */
+var DEMO={
+  "মালিক (admin)":   {a:"admin@demo.com", b:""},
+  "শিক্ষক":          {a:"", b:""},
+  "ছাত্র (আইডি)":    {a:"DM260001", b:""}
+};
+/* ======================================== */
+var SB="https://rfopkndpxafctfkqvmqj.supabase.co",KEY="sb_publishable_EH_BnOXjZ3EtUJ3wl9-8CA_2_Glbkyi";
+var q=new URLSearchParams(location.search),slug=(q.get("c")||"demo").toLowerCase().replace(/[^a-z0-9_-]/g,"");
+["a1","a2"].forEach(function(id){var a=document.getElementById(id);a.href=a.getAttribute("href")+"?c="+slug});
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function bn(x){return String(x).replace(/\d/g,function(d){return"০১২৩৪৫৬৭৮৯"[d]})}
+
+/* কোচিংয়ের নাম, রং, লোগো ডাটাবেস থেকে */
+fetch(SB+"/rest/v1/rpc/coaching_public",{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+KEY,"Content-Type":"application/json"},body:JSON.stringify({p_slug:slug})})
+.then(function(r){return r.json()}).then(function(o){
+  if(!o||o.code||!o.name)return;
+  $("nm").textContent=o.name;document.title=o.name+" - ডেমো";$("ft").textContent="© "+o.name;
+  if(/^#[0-9a-f]{6}$/i.test(o.color||"")){var R=document.documentElement.style,c=o.color;
+    R.setProperty("--pr",c);R.setProperty("--prd","color-mix(in srgb,"+c+" 70%,#000)");R.setProperty("--prl","color-mix(in srgb,"+c+" 12%,#fff)")}
+  if(o.logo_url){var i=new Image();i.onload=function(){$("lg").innerHTML="";$("lg").appendChild(i)};i.src=o.logo_url}
+}).catch(function(){});
+
+/* লগইন তথ্য */
+var h="";Object.keys(DEMO).forEach(function(k){var d=DEMO[k];if(!d.a&&!d.b)return;
+  if(d.a)h+='<div class="row"><span>'+esc(k)+'</span><b>'+esc(d.a)+'<button class="cp" data-v="'+esc(d.a)+'">কপি</button></b></div>';
+  if(d.b)h+='<div class="row"><span>পাসওয়ার্ড</span><b>'+esc(d.b)+'<button class="cp" data-v="'+esc(d.b)+'">কপি</button></b></div>'});
+if(h){$("cred").hidden=false;$("cr").innerHTML=h;
+  $("cr").addEventListener("click",function(e){var b=e.target.closest(".cp");if(!b)return;
+    (navigator.clipboard?navigator.clipboard.writeText(b.dataset.v):Promise.reject()).then(function(){b.textContent="✓"}).catch(function(){})})}
+</script>
+</body></html>

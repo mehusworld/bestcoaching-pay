@@ -23,7 +23,7 @@ label.i input{width:20px;height:20px;accent-color:var(--pr)}
 .did{background:#fef3c7;color:#92400e;border-radius:6px;padding:2px 10px;font-weight:700;font-size:14px}
 .tt{display:flex;justify-content:space-between;background:var(--prl);border-radius:10px;padding:12px 14px;margin:14px 0;font-size:18px}
 </style></head><body>
-<div class="top"><div class="in"><a href="student.html">← ছাত্র পোর্টালে যান</a><h1>মাসিক বেতন পরিশোধ</h1><p>শুধু আইডি নম্বর দিয়েই বেতন দিন</p></div></div>
+<div class="top"><div class="in"><a href="student.html">← ছাত্র পোর্টালে যান</a><h1>মাসিক বেতন পরিশোধ</h1><p>আইডি ও ফোনের শেষ ৪ সংখ্যা দিয়ে বেতন দিন</p></div></div>
 <div class="c" id="app"></div>
 <script>
 const SB=supabase.createClient("https://rfopkndpxafctfkqvmqj.supabase.co","sb_publishable_EH_BnOXjZ3EtUJ3wl9-8CA_2_Glbkyi");
@@ -33,7 +33,7 @@ const MN=["জানুয়ারি","ফেব্রুয়ারি","ম
 let D=null,U="",L4="";
 function applyBrand(c){if(!c)return;const R=document.documentElement.style,col=/^#[0-9a-fA-F]{6}$/.test(c.color||"")?c.color:null;
 if(col){R.setProperty("--pr",col);R.setProperty("--prd","color-mix(in srgb,"+col+" 70%,#000)");R.setProperty("--prdd","color-mix(in srgb,"+col+" 45%,#000)");R.setProperty("--prl","color-mix(in srgb,"+col+" 12%,#fff)")}
-if(c.name){document.title=c.name+", বেতন দিন";const p=document.querySelector(".top p");if(p)p.textContent=c.name+", শুধু আইডি নম্বর দিয়েই বেতন দিন"}}
+if(c.name){document.title=c.name+", বেতন দিন";const p=document.querySelector(".top p");if(p)p.textContent=c.name+", আইডি ও ফোনের শেষ ৪ সংখ্যা দিয়ে বেতন দিন"}}
 (async()=>{const q=new URLSearchParams(location.search).get("c");if(!q)return;try{const r=await SB.rpc("coaching_public",{p_slug:q});if(r.data)applyBrand(r.data)}catch(e){}})();
 function home(m){$("app").innerHTML=`<p style="margin:0 0 10px;color:var(--mu)">ভর্তি কার্ডে লেখা আইডি নম্বরটি দিন</p>
 <label for="u" style="font-size:14px;color:var(--mu)">শিক্ষার্থীর আইডি</label>

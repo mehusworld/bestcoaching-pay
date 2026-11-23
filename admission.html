@@ -112,7 +112,7 @@ button,input,select{font:inherit;color:inherit}
 <div id="app"><p style="padding:24px">লোড হচ্ছে...</p></div>
 <div id="md"><div class="in" id="mdin"></div></div>
 <script>
-const ADM=1000,BG=["A+","A-","B+","B-","O+","O-","AB+","AB-"];
+let ADM=1000;const BG=["A+","A-","B+","B-","O+","O-","AB+","AB-"];
 const DOW=["শনি","রবি","সোম","মঙ্গল","বুধ","বৃহস্পতি","শুক্র"];
 let SUB={},KEYS=[];
 const BN="০১২৩৪৫৬৭৮৯",bn=x=>String(x).replace(/\d/g,d=>BN[d]);
@@ -136,7 +136,7 @@ let SB=null;
 const DEF_SLUG="best";
 const COACH_SLUG=new URLSearchParams(location.search).get("c")||DEF_SLUG;
 const BR={name:"",tagline:"",note:"",logo:"",classes:["নবম","দশম"]};
-function applyBrand(o){if(!o)return;if(o.name)BR.name=o.name;BR.note=(o.card_note||"").trim();BR.logo=o.logo_url||"";
+function applyBrand(o){if(!o)return;if(o.admission_fee!=null&&!isNaN(+o.admission_fee))ADM=+o.admission_fee;if(o.name)BR.name=o.name;BR.note=(o.card_note||"").trim();BR.logo=o.logo_url||"";
 if(Array.isArray(o.classes)&&o.classes.length)BR.classes=o.classes;
 BR.tagline=BR.classes.join(" ও ")+" শ্রেণি"+(BR.note?", "+BR.note:"");
 if(typeof F!=="undefined"&&!BR.classes.includes(F.cls))F.cls=BR.classes[0];
@@ -145,7 +145,7 @@ if(col){R.setProperty("--pr",col);R.setProperty("--prd","color-mix(in srgb,"+col
 let m=document.querySelector('meta[name=theme-color]');if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.content=col}
 document.title=BR.name+", ভর্তি ফর্ম"}
 const brLogo=()=>BR.logo?`<img src="${esc(BR.logo)}" alt="" crossorigin="anonymous" style="width:44px;height:44px;border-radius:12px;object-fit:cover;background:#fff;display:block;margin:0 auto 6px">`:"";
-async function pubBrand(){try{const r=await SB.rpc("coaching_admission",{p_slug:COACH_SLUG});const d=r.data;if(d){applyBrand(d.coaching);setSub(d.teachers||[]);if(d.schools&&d.schools.length){schools=d.schools;F.school=schools[0]}if(!d.coaching)SETUP="এই লিংকের কোচিং পাওয়া যায়নি বা বন্ধ আছে"}}catch(e){SETUP=String(e&&e.message||e)}}
+async function pubBrand(){try{const r=await SB.rpc("coaching_admission",{p_slug:COACH_SLUG});const d=r.data;if(d){applyBrand(d.coaching);setSub(d.teachers||[]);schools=d.schools||[];F.school=schools.length?schools[0]:"__new";if(!d.coaching)SETUP="এই লিংকের কোচিং পাওয়া যায়নি বা বন্ধ আছে"}}catch(e){SETUP=String(e&&e.message||e)}}
 async function init(cb){
 if(SB_KEY=="YOUR_ANON_PUBLIC_KEY"){$("app").innerHTML='<div class="lgn"><h2>Supabase তথ্য বসানো হয়নি</h2><p>ফাইলের উপরের দিকে <b>SB_URL</b> ও <b>SB_KEY</b> বসান।</p></div>';return}
 SB=supabase.createClient(SB_URL,SB_KEY);
@@ -182,7 +182,7 @@ window.addEventListener("error",e=>{let b=document.getElementById("ebar");if(!b)
 window.addEventListener("unhandledrejection",e=>{window.dispatchEvent(new ErrorEvent("error",{message:String(e.reason&&e.reason.message||e.reason)}))});
 
 const F={name:"",addr:"",phone:"",gphone:"",date:today(),cls:"নবম",school:"",bg:"A+",gender:"ছেলে",nsc:""};
-let step=1,sel=[],photo="",schools=["A.K School","Bright School","Bornomala School"],busy=false;
+let step=1,sel=[],photo="",schools=[],busy=false;
 let ER={};
 document.addEventListener("input",e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){F[k]=e.target.value;delete ER[k];const m=e.target.parentNode.querySelector(".er");if(m)m.textContent=""}});
 let SETUP="";
@@ -219,7 +219,7 @@ function pic(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onloa
 async function submitF(){if(busy)return;if(!ok1()){step=1;draw();return}busy=true;$("sb").disabled=true;
 try{const sc=F.school=="__new"?F.nsc.trim():F.school;
 const q=await SB.rpc("admit",{p:{name:F.name.trim(),addr:F.addr.trim(),phone:F.phone.trim(),gphone:F.gphone.trim(),date:F.date,cls:F.cls,school:sc,bg:F.bg,gender:F.gender,sub:[...sel],photo,coaching:COACH_SLUG}});if(q.error)throw q.error;
-const s=q.data;Object.assign(F,{name:"",addr:"",phone:"",gphone:"",date:today(),nsc:"",school:schools[0]});sel=[];photo="";step=1;draw();showId(s)
+const s=q.data;Object.assign(F,{name:"",addr:"",phone:"",gphone:"",date:today(),nsc:"",school:schools[0]||"__new"});sel=[];photo="";step=1;draw();showId(s)
 }catch(e){const m=e&&e.message||String(e);alert("ভর্তি সেভ হয়নি: "+m+(m.includes("schema cache")?"\n\nসমাধান: Supabase এ project rfopkndpxafctfkqvmqj খুলে SQL Editor এ supabase.sql run করুন, তারপর এই পেজ রিফ্রেশ করুন।":""));$("sb").disabled=false}busy=false}
 init(async()=>{draw()});
 

@@ -491,8 +491,7 @@ function tEdit(id){const t=id?TL.find(x=>x.id==id):{};TE=id||null;TD=[...(t.days
 const f=(i,l,v,ty,ex)=>`<label class="fld"><span>${l}</span><input id="${i}" ${ty?`type="${ty}"`:""} ${ex||""} value="${esc(v==null?"":v)}"></label>`;
 show(`<h2 style="margin:0 0 14px">${id?"শিক্ষকের তথ্য সংশোধন":"নতুন শিক্ষক যোগ করুন"}</h2>
 <div class="av2"><img id="tpv" src="${TP||AV}" alt=""><div><button type="button" class="btn sec sm" onclick="$('tpf').click()">ছবি বাছুন</button> ${TP?`<button type="button" class="btn dng sm" onclick="TP='';$('tpv').src=AV">ছবি সরান</button>`:""}<input id="tpf" type="file" accept="image/*" hidden onchange="tpic(this)"></div></div>
-<div class="g2">${f("t_nm","শিক্ষকের নাম *",t.name,"","placeholder='যেমন: সাঈদ স্যার'")}${f("t_sb","বিষয় *",t.subject,"","placeholder='যেমন: বাংলা'")}
-${id?`<label class="fld"><span>বিষয়ের কোড</span><input value="${esc(t.code)}" disabled></label>`:f("t_cd","বিষয়ের কোড * (ছোট ইংরেজি অক্ষর)","","","maxlength=8 placeholder='যেমন: bng'")}
+<div class="g2">${f("t_nm","শিক্ষকের নাম *",t.name,"","placeholder='যেমন: সাঈদ স্যার'")}${(BR.subjects&&BR.subjects.length)?`<label class="fld"><span>বিষয় *</span><select id="t_sb"><option value="">বিষয় বাছুন</option>${[...new Set([...BR.subjects,...(t.subject?[t.subject]:[])])].map(s=>`<option ${s==t.subject?"selected":""}>${esc(s)}</option>`).join("")}</select></label>`:f("t_sb","বিষয় *",t.subject,"","placeholder='যেমন: বাংলা'")}
 ${f("t_em","পোর্টালে লগইনের ইমেইল",t.email,"email","placeholder=teacher@gmail.com")}${f("t_ph","মোবাইল নম্বর",t.phone,"tel","data-ph inputmode=numeric maxlength=11")}${f("t_jn","যোগদানের তারিখ",t.joined||today(),"date")}
 ${f("t_fe","শিক্ষার্থীর মাসিক ফি (৳) *",t.fee==null?700:t.fee,"number","min=0")}${f("t_sl","শিক্ষকের মাসিক বেতন (৳)",t.salary||0,"number","min=0")}</div>
 <div class="fld"><span>কোন কোন বার ক্লাস *</span><div class="seg">${DOW.map(d=>`<button type="button" class="${TD.includes(d)?"on":""}" onclick="this.classList.toggle('on');TD=TD.includes('${d}')?TD.filter(x=>x!='${d}'):[...TD,'${d}']">${d}</button>`).join("")}</div></div>
@@ -500,9 +499,9 @@ ${f("t_fe","শিক্ষার্থীর মাসিক ফি (৳) *",t.
 <label class="fld"><span>বিষয়ের রং</span><input id="t_cl" type="color" value="${t.color||"#0f766e"}"></label>${f("t_nt","নোট",t.note)}</div>
 <p style="color:var(--mu);font-size:14px;margin:0 0 12px">শিক্ষক এই ইমেইল ও পাসওয়ার্ড দিয়ে পোর্টালে ঢুকবেন। অ্যাকাউন্ট বানাতে Supabase → Authentication → Users → Add user এ একই ইমেইল দিন (Auto Confirm User টিক দিয়ে)।</p><button class="btn" id="tsv" onclick="tSave()">সংরক্ষণ করুন</button>`,"x",1)}
 function tpic(i){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=160;c.height=200;const x=c.getContext("2d"),k=Math.max(160/im.width,200/im.height);x.drawImage(im,(160-im.width*k)/2,(200-im.height*k)/2,im.width*k,im.height*k);TP=c.toDataURL("image/jpeg",.8);$("tpv").src=TP};im.src=r.result};r.readAsDataURL(f)}
-async function tSave(){const g=i=>$(i).value.trim(),code=TE?TL.find(x=>x.id==TE).code:g("t_cd").toLowerCase();
+function autoCode(sb){const M={"বাংলা":"bng","ইংরেজি":"eng","গণিত":"mth","উচ্চতর গণিত":"hmth","পদার্থবিজ্ঞান":"phy","রসায়ন":"chm","জীববিজ্ঞান":"bio","সাধারণ বিজ্ঞান":"sci","বিজ্ঞান":"sci","ICT":"ict","আইসিটি":"ict","হিসাববিজ্ঞান":"acc","অর্থনীতি":"eco","ইতিহাস":"his","ভূগোল":"geo","ধর্ম":"rel","সামাজিক বিজ্ঞান":"ssc"},al="abcdefghijklmnopqrstuvwxyz";let b=M[sb]||(/^[A-Za-z]{2,5}$/.test(sb)?sb.toLowerCase():"sub"),c=b,n=0;while(TL.some(x=>x.code==c)){n++;c=b+al[n%26]+(n>25?al[Math.floor(n/26)%26]:"")}return c}
+async function tSave(){const g=i=>$(i).value.trim(),code=TE?TL.find(x=>x.id==TE).code:autoCode(g("t_sb"));
 if(!g("t_nm")||!g("t_sb")){alert("নাম ও বিষয় দিন");return}
-if(!TE&&(!/^[a-z]{2,8}$/.test(code)||TL.some(x=>x.code==code))){alert("কোড ২–৮টি ছোট ইংরেজি অক্ষরের হতে হবে এবং আগে ব্যবহার করা যাবে না");return}
 if(!TD.length){alert("অন্তত একটি বার বেছে নিন");return}
 if(!g("t_s1")||!g("t_s2")||mins(g("t_s2"))<=mins(g("t_s1"))){alert("ক্লাস শেষের সময় শুরুর পরে হতে হবে");return}
 if(g("t_ph")&&!okPh(g("t_ph"))){alert("মোবাইল নম্বর ঠিক ১১ সংখ্যার হতে হবে");return}
@@ -513,7 +512,7 @@ const cf=TL.find(x=>x.id!=TE&&x.active!==false&&(x.days||[]).some(d=>days.includ
 if(cf&&!confirm("এই সময়ে "+cf.name+" ("+cf.subject+") এর ক্লাস আছে। তবুও সংরক্ষণ করবেন?"))return;
 const d={email:g("t_em").toLowerCase()||null,name:g("t_nm"),subject:g("t_sb"),days,start_t:g("t_s1"),end_t:g("t_s2"),fee:fe,salary:sl,phone:g("t_ph"),joined:g("t_jn")||null,note:g("t_nt"),color:$("t_cl").value,photo:TP};
 $("tsv").disabled=true;const r=TE?await SB.from("teachers").update(d).eq("id",TE):await SB.from("teachers").insert({...d,code});
-if(r.error){alert(/duplicate|unique/i.test(r.error.message)?"এই কোড অন্য কেউ ব্যবহার করছে, অন্য একটি কোড দিন":"সেভ হয়নি: "+r.error.message);$("tsv").disabled=false;return}cl();load()}
+if(r.error){alert(/duplicate|unique/i.test(r.error.message)?"একই সময়ে আরেকজন যোগ করেছে, আবার চেষ্টা করুন":"সেভ হয়নি: "+r.error.message);$("tsv").disabled=false;return}cl();load()}
 function tSal(id){const t=TL.find(x=>x.id==id);show(`<h2 style="margin:0 0 6px">${esc(t.name)}, মাসিক বেতন</h2><p style="margin:0 0 14px;color:var(--mu)">এখন: ${tk(t.salary||0)}</p><label class="fld"><span>নতুন মাসিক বেতন (৳)</span><input id="sl_v" type="number" min="0" value="${t.salary||0}"></label><button class="btn" onclick="tSalSave('${id}')">সংরক্ষণ করুন</button>`,"x",1)}
 async function tSalSave(id){const v=+$("sl_v").value;if(!(v>=0)){alert("সঠিক সংখ্যা দিন");return}const r=await SB.from("teachers").update({salary:v}).eq("id",id);if(r.error){alert(r.error.message);return}cl();load()}
 async function tTog(id){const t=TL.find(x=>x.id==id);if(t.active!==false&&!confirm("বন্ধ করলে নতুন ভর্তি ফর্মে এই বিষয় আর দেখাবে না। আগের শিক্ষার্থীদের তথ্য থাকবে। বন্ধ করবেন?"))return;await SB.from("teachers").update({active:t.active===false}).eq("id",id);load()}
@@ -1340,12 +1339,12 @@ const SB_URL="https://rfopkndpxafctfkqvmqj.supabase.co",SB_KEY="sb_publishable_E
 // =====================================================================
 let SB=null;
 const DEF_SLUG="best";const URL_SLUG=(()=>{const p=new URLSearchParams(location.search);return(p.get("c")||p.get("")||"").toLowerCase().replace(/[^a-z0-9_-]/g,"")})();
-const BR={name:"কোচিং পোর্টাল",sig:"",color:"#0f766e",classes:["নবম","দশম"],note:"",bal:0,unl:false,logo:"",alloc:0,bill:0,rate:0};
+const BR={name:"কোচিং পোর্টাল",sig:"",color:"#0f766e",classes:["নবম","দশম"],subjects:[],note:"",bal:0,unl:false,logo:"",alloc:0,bill:0,rate:0};
 const own=n=>/ং$/.test(n)?n+"য়ের":/[\u0985-\u0994\u09BE-\u09CC]$/.test(n)?n+"র":n+"ের";
 function shade(h,f){const n=parseInt(h.slice(1),16),r=n>>16,g=n>>8&255,b=n&255,m=c=>Math.max(0,Math.min(255,Math.round(c*f)));return"#"+[m(r),m(g),m(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 function tint(h,f){const n=parseInt(h.slice(1),16),r=n>>16,g=n>>8&255,b=n&255,m=c=>Math.round(c+(255-c)*f);return"#"+[m(r),m(g),m(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 function applyBrand(o){if(!o)return;if(o.admission_fee!=null&&!isNaN(+o.admission_fee))ADM=+o.admission_fee;if(o.name)BR.name=o.name;BR.sig=o.sms_signature||o.name||BR.name;if(o.logo_url)BR.logo=o.logo_url;
-if(Array.isArray(o.classes)&&o.classes.length)BR.classes=o.classes;if(o.card_note!=null)BR.note=o.card_note;if(o.sms_balance!=null)BR.bal=o.sms_balance;BR.unl=o.sms_unlimited===true;if(o.sms_alloc!=null){BR.alloc=+o.sms_alloc||0;BR.bill=+o.sms_bill||0;BR.rate=+o.sms_rate||0}
+if(Array.isArray(o.classes)&&o.classes.length)BR.classes=o.classes;if(Array.isArray(o.subjects))BR.subjects=o.subjects;if(o.card_note!=null)BR.note=o.card_note;if(o.sms_balance!=null)BR.bal=o.sms_balance;BR.unl=o.sms_unlimited===true;if(o.sms_alloc!=null){BR.alloc=+o.sms_alloc||0;BR.bill=+o.sms_bill||0;BR.rate=+o.sms_rate||0}
 if(/^#[0-9a-fA-F]{6}$/.test(o.color||"")){BR.color=o.color;const r=document.documentElement.style;r.setProperty("--pr",o.color);r.setProperty("--prd",shade(o.color,.75));r.setProperty("--prl",tint(o.color,.9))}
 document.title=BR.name+" পোর্টাল"}
 async function pubBrand(){try{const q=URL_SLUG||DEF_SLUG,r=await SB.rpc("coaching_public",{p_slug:q});if(r.data)applyBrand(r.data)}catch(e){}}
